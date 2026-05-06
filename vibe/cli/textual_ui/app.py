@@ -1669,6 +1669,33 @@ class VibeApp(App):  # noqa: PLR0904
     async def _show_data_retention(self, **kwargs: Any) -> None:
         await self._mount_and_scroll(UserCommandMessage(DATA_RETENTION_MESSAGE))
 
+    async def _show_system_prompt(self, **kwargs: Any) -> None:
+        """Show the current system prompt."""
+        if not self.agent_loop.is_initialized:
+            await self._mount_and_scroll(
+                ErrorMessage(
+                    "Agent loop not initialized. Please wait and try again.",
+                    collapsed=self._tools_collapsed,
+                )
+            )
+            return
+
+        try:
+            # Get the system prompt from the first message in history
+            system_prompt = self.agent_loop.messages[0].content
+            await self._mount_and_scroll(
+                UserCommandMessage(
+                    f"## System Prompt\n\n```\n{system_prompt}\n```"
+                )
+            )
+        except Exception as e:
+            await self._mount_and_scroll(
+                ErrorMessage(
+                    f"Failed to get system prompt: {e}",
+                    collapsed=self._tools_collapsed,
+                )
+            )
+
     async def _rename_local_session(self, title: str) -> str:
         session_logger = self.agent_loop.session_logger
         if not session_logger.enabled or session_logger.session_metadata is None:

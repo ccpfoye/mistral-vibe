@@ -66,9 +66,7 @@ class Banner(Static):
                 with Horizontal(classes="banner-line"):
                     yield NoMarkupStatic("", id="banner-meta-counts")
                 with Horizontal(classes="banner-line"):
-                    yield NoMarkupStatic("Type ", classes="banner-meta")
-                    yield NoMarkupStatic("/help", classes="banner-cmd")
-                    yield NoMarkupStatic(" for more information", classes="banner-meta")
+                    yield NoMarkupStatic("Welcome Clay!", classes="banner-meta")
 
     def on_mount(self) -> None:
         self.state = self._initial_state

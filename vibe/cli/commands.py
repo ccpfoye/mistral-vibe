@@ -166,6 +166,11 @@ class CommandRegistry:
                 description="Show data retention information",
                 handler="_show_data_retention",
             ),
+            "system-prompt": Command(
+                aliases=frozenset(["/system-prompt"]),
+                description="Show the current system prompt",
+                handler="_show_system_prompt",
+            ),
         }
 
     @property
